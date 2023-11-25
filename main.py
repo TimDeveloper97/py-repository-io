@@ -2,8 +2,9 @@ import XmlRepository as Xml
 import json
 
 
-class Book(object):
-    def __init__(self, author, title, genre, price, description):
+class Book:
+    def __init__(self, id, author, title, genre, price, description):
+        self.id = id
         self.author = author
         self.title = title
         self.genre = genre
@@ -18,8 +19,19 @@ pathFolder = f"O:\\TestData"
 pathFile = f"O:\\TestData\\book.xml"
 
 _xmlRepository = Xml.XmlRepository()
-js = json.loads(_xmlRepository.read(pathFile))
+result = _xmlRepository.read(pathFile)
+print(result)
+js = json.loads(result)
 
-book: list[Book] = js['root']['book']
+print(js)
 
-print(book)
+# books: list[Book](js['root']['book'])
+
+book1s = [Book(id=b.get('@id'), author=b.get('author'),
+               title=b.get('title'), genre=b.get('genre'), price=b.get('price'),
+               description=b.get('description')) for b in js['root']['book']]
+# books = [Book(**book_data) for book_data in data_list]
+
+for book in book1s:
+    print(f"Title: {book.title}, Author: {book.author}")
+print("hello world")

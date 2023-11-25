@@ -45,7 +45,8 @@ class XmlRepository:
                     pathFolder) if f.endswith('.xml')]
 
                 for xmlfile in xmlfiles:
-                    objs.insert(self.read(xmlfile))
+                    print(pathFolder + xmlfile)
+                    objs.append(self.read(pathFolder + "\\" + xmlfile))
 
                 return objs
         except Exception as ex:
