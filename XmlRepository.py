@@ -147,7 +147,14 @@ class XmlRepository:
 
         Returns: TBD.
         """
-        pass
+        try:
+            pathFile = pathFolder + f"\\{obj.id}.xml"
+            if os.path.exists(pathFile):
+                os.remove(pathFile)
+            self.createByName(pathFile, obj)
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
 
     def updateByName(self, pathFile, obj):
         """

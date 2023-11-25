@@ -20,10 +20,10 @@ pathFolder = f"O:\\TestData"
 pathFile = f"O:\\TestData\\book.xml"
 
 _xmlRepository = Xml.XmlRepository()
-result = _xmlRepository.readAll(pathFolder)
+result = _xmlRepository.read(pathFile)
 # print(result)
 
-js = json.loads(result[0])
+js = json.loads(result)
 
 # print(js)
 
@@ -42,6 +42,6 @@ books = [Book(id=b.get('@id'), author=b.get('author'),
 # x = _xmlRepository.createById(
 #     pathFolder=pathFolder, obj=book)
 
-_xmlRepository.createAll(pathFolder, books)
+_xmlRepository.updateById(pathFolder, books[0])
 # for book in books:
 # print(f"Title: {book.title}, Author: {book.author}")
