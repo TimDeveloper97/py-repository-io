@@ -7,11 +7,7 @@ import json
 
 class BaseModel:
     def __init__(self, id):
-        self._id = id
-
-    @property
-    def id(self):
-        return self._id
+        self.id = id
 
 
 class XmlRepository:
@@ -61,7 +57,7 @@ class XmlRepository:
             print("Error: ", ex)
         return None
 
-    def createById(self, pathFolder, id, obj):
+    def createById(self, pathFolder, obj):
         """
         Create file with object.
 
@@ -75,7 +71,7 @@ class XmlRepository:
             if not os.path.exists(pathFolder):
                 os.makedirs(pathFolder)
 
-            pathfile = pathFolder + f"\\{id}.xml"
+            pathfile = pathFolder + f"\\{obj.id}.xml"
 
             if os.path.exists(pathfile):
                 os.remove(pathfile)
@@ -103,7 +99,22 @@ class XmlRepository:
 
         Returns: TBD.
         """
-        pass
+        try:
+            if os.path.exists(pathFile):
+                os.remove(pathFile)
+
+            # Convert JSON string to Python dictionary
+            json_data = json.dumps(obj.__dict__)
+
+            # Convert dictionary to XML string
+            xml_string = dicttoxml.dicttoxml(
+                json_data, custom_root=self.root).decode("utf-8")
+
+            with open(pathFile, 'w') as file:
+                file.write(xml_string)
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
 
     def createAll(self, pathFolder, objs):
         """

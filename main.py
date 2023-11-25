@@ -2,9 +2,10 @@ import XmlRepository as Xml
 import json
 
 
-class Book:
+class Book(Xml.BaseModel):
     def __init__(self, id, author, title, genre, price, description):
-        self.id = id
+        super().__init__(id)
+
         self.author = author
         self.title = title
         self.genre = genre
@@ -39,7 +40,7 @@ books = [Book(id=b.get('@id'), author=b.get('author'),
               description=b.get('description')) for b in js['root']['book']]
 book = books[0]
 x = _xmlRepository.createById(
-    pathFolder=pathFolder, id=books[0].id, obj=book)
+    pathFolder=pathFolder, obj=book)
 
 # for book in books:
 # print(f"Title: {book.title}, Author: {book.author}")
