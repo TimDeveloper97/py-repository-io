@@ -5,6 +5,15 @@ import dicttoxml
 import json
 
 
+class BaseModel:
+    def __init__(self, id):
+        self._id = id
+
+    @property
+    def id(self):
+        return self._id
+
+
 class XmlRepository:
     def __init__(self, root="root") -> None:
         self.root = root
@@ -45,7 +54,6 @@ class XmlRepository:
                     pathFolder) if f.endswith('.xml')]
 
                 for xmlfile in xmlfiles:
-                    print(pathFolder + xmlfile)
                     objs.append(self.read(pathFolder + "\\" + xmlfile))
 
                 return objs
@@ -53,7 +61,7 @@ class XmlRepository:
             print("Error: ", ex)
         return None
 
-    def createById(self, pathFolder, obj):
+    def createById(self, pathFolder, id, obj):
         """
         Create file with object.
 
@@ -64,19 +72,20 @@ class XmlRepository:
         Returns: TBD.
         """
         try:
-            if not os.path(pathFolder).exists():
+            if not os.path.exists(pathFolder):
                 os.makedirs(pathFolder)
 
-            pathfile = pathFolder + f"/{obj.Id}.xml"
+            pathfile = pathFolder + f"\\{id}.xml"
+
             if os.path.exists(pathfile):
                 os.remove(pathfile)
 
             # Convert JSON string to Python dictionary
-            json_data = json.loads(obj)
+            json_data = json.dumps(obj.__dict__)
 
             # Convert dictionary to XML string
             xml_string = dicttoxml.dicttoxml(
-                json_data, custom_root=self.root, item_wrap=False).decode("utf-8")
+                json_data, custom_root=self.root).decode("utf-8")
 
             with open(pathfile, 'w') as file:
                 file.write(xml_string)

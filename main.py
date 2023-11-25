@@ -24,7 +24,7 @@ result = _xmlRepository.readAll(pathFolder)
 
 js = json.loads(result[0])
 
-print(js)
+# print(js)
 
 # books: list[Book](js['root']['book'])
 # get object book
@@ -37,5 +37,9 @@ print(js)
 books = [Book(id=b.get('@id'), author=b.get('author'),
               title=b.get('title'), genre=b.get('genre'), price=b.get('price'),
               description=b.get('description')) for b in js['root']['book']]
-for book in books:
-    print(f"Title: {book.title}, Author: {book.author}")
+book = books[0]
+x = _xmlRepository.createById(
+    pathFolder=pathFolder, id=books[0].id, obj=book)
+
+# for book in books:
+# print(f"Title: {book.title}, Author: {book.author}")
