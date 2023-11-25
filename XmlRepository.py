@@ -1,0 +1,144 @@
+from ast import excepthandler
+import os
+import xmltodict
+import dicttoxml
+import json
+
+
+class XmlRepository:
+    def __init__(self, root="root") -> None:
+        self.root = root
+
+    def read(self, pathFile):
+        """
+        Read json file.
+
+        Parameters:
+        - pathFile (string): path of the file xml.
+
+        Returns: TBD.
+        """
+        try:
+            if pathFile and os.path.exists(pathFile):
+                with open(pathFile, 'r') as file:
+                    content = file.read()
+                    js = json.dumps(xmltodict.parse(content), indent=2)
+                    return js
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
+
+    def readAll(self, pathFolder):
+        """
+        Read json file.
+
+        Parameters:
+        - pathFolder (string): path of the folder xml.
+
+        Returns: TBD.
+        """
+        try:
+            files = []
+            objs = []
+            if os.path.exists(pathFolder) and os.path.isdir(pathFolder):
+                xmlfiles = [f for f in os.listdir(
+                    pathFolder) if f.endswith('.xml')]
+
+                for xmlfile in xmlfiles:
+                    objs.insert(self.read(xmlfile))
+
+                return objs
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
+
+    def createById(self, pathFolder, obj):
+        """
+        Create file with object.
+
+        Parameters:
+        - pathFolder (string): path of the folder xml.
+        - obj (string): object to write.
+
+        Returns: TBD.
+        """
+        try:
+            if not os.path(pathFolder).exists():
+                os.makedirs(pathFolder)
+
+            pathfile = pathFolder + f"/{obj.Id}.xml"
+            if os.path.exists(pathfile):
+                os.remove(pathfile)
+
+            # Convert JSON string to Python dictionary
+            json_data = json.loads(obj)
+
+            # Convert dictionary to XML string
+            xml_string = dicttoxml.dicttoxml(
+                json_data, custom_root=self.root, item_wrap=False).decode("utf-8")
+
+            with open(pathfile, 'w') as file:
+                file.write(xml_string)
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
+
+    def createByName(self, pathFile, obj):
+        """
+        Ccreate all file with object.
+
+        Parameters:
+        - pathFile (string): path of the file xml.
+        - obj (string): object to write.
+
+        Returns: TBD.
+        """
+        pass
+
+    def createAll(self, pathFolder, objs):
+        """
+        Ccreate all file with object.
+
+        Parameters:
+        - pathFolder (string): path of the folder xml.
+        - objs (string): list object to write.
+
+        Returns: TBD.
+        """
+        pass
+
+    def updateById(self, pathFolder, obj):
+        """
+        Ccreate all file with object.
+
+        Parameters:
+        - pathFolder (string): path of the folder xml.
+        - obj (string): object to write.
+
+        Returns: TBD.
+        """
+        pass
+
+    def updateByName(self, pathFile, obj):
+        """
+        Create json file with specification name in path.
+
+        Parameters:
+        - pathFile (string): path of the file xml.
+        - obj (string): object to write.
+
+        Returns: TBD.
+        """
+        pass
+
+    def delete(self, pathFolder, id):
+        """
+        Create json file with specification name in path.
+
+        Parameters:
+        - pathFile (string): path of the file xml.
+        - obj (string): object to write.
+
+        Returns: TBD.
+        """
+        pass
