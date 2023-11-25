@@ -42,6 +42,6 @@ books = [Book(id=b.get('@id'), author=b.get('author'),
 # x = _xmlRepository.createById(
 #     pathFolder=pathFolder, obj=book)
 
-_xmlRepository.updateById(pathFolder, books[0])
+_xmlRepository.delete(pathFolder, books[0].id)
 # for book in books:
 # print(f"Title: {book.title}, Author: {book.author}")

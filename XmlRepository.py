@@ -148,6 +148,9 @@ class XmlRepository:
         Returns: TBD.
         """
         try:
+            if not os.path.exists(pathFolder):
+                os.makedirs(pathFolder)
+
             pathFile = pathFolder + f"\\{obj.id}.xml"
             if os.path.exists(pathFile):
                 os.remove(pathFile)
@@ -166,7 +169,13 @@ class XmlRepository:
 
         Returns: TBD.
         """
-        pass
+        try:
+            if os.path.exists(pathFile):
+                os.remove(pathFile)
+            self.createByName(pathFile, obj)
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
 
     def delete(self, pathFolder, id):
         """
@@ -178,4 +187,14 @@ class XmlRepository:
 
         Returns: TBD.
         """
-        pass
+        try:
+            if not os.path.exists(pathFolder):
+                os.makedirs(pathFolder)
+
+            pathFile = pathFolder + f"\\{id}.xml"
+            if os.path.exists(pathFile):
+                os.remove(pathFile)
+
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
