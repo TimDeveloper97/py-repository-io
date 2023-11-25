@@ -19,19 +19,23 @@ pathFolder = f"O:\\TestData"
 pathFile = f"O:\\TestData\\book.xml"
 
 _xmlRepository = Xml.XmlRepository()
-result = _xmlRepository.read(pathFile)
-print(result)
-js = json.loads(result)
+result = _xmlRepository.readAll(pathFolder)
+# print(result)
+
+js = json.loads(result[0])
 
 print(js)
 
 # books: list[Book](js['root']['book'])
-
-book1s = [Book(id=b.get('@id'), author=b.get('author'),
-               title=b.get('title'), genre=b.get('genre'), price=b.get('price'),
-               description=b.get('description')) for b in js['root']['book']]
+# get object book
+# books = [Book(id=b.get('@id'), author=b.get('author'),
+#                title=b.get('title'), genre=b.get('genre'), price=b.get('price'),
+#                description=b.get('description')) for b in js['root']['book']]
 # books = [Book(**book_data) for book_data in data_list]
 
-for book in book1s:
+# get list object books
+books = [Book(id=b.get('@id'), author=b.get('author'),
+              title=b.get('title'), genre=b.get('genre'), price=b.get('price'),
+              description=b.get('description')) for b in js['root']['book']]
+for book in books:
     print(f"Title: {book.title}, Author: {book.author}")
-print("hello world")
