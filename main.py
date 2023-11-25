@@ -1,4 +1,5 @@
 import XmlRepository as Xml
+import json
 
 
 class Book(object):
@@ -17,7 +18,8 @@ pathFolder = f"O:\\TestData"
 pathFile = f"O:\\TestData\\book.xml"
 
 _xmlRepository = Xml.XmlRepository()
-js = _xmlRepository.read(pathFile)
-book: Book = js
+js = json.loads(_xmlRepository.read(pathFile))
+
+book: list[Book] = js['root']['book']
 
 print(book)
