@@ -126,7 +126,16 @@ class XmlRepository:
 
         Returns: TBD.
         """
-        pass
+        try:
+            if not os.path.exists(pathFolder):
+                os.makedirs(pathFolder)
+
+            if objs:
+                for obj in objs:
+                    self.createById(pathFolder, obj)
+        except Exception as ex:
+            print("Error: ", ex)
+        return None
 
     def updateById(self, pathFolder, obj):
         """

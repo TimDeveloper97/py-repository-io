@@ -38,9 +38,10 @@ js = json.loads(result[0])
 books = [Book(id=b.get('@id'), author=b.get('author'),
               title=b.get('title'), genre=b.get('genre'), price=b.get('price'),
               description=b.get('description')) for b in js['root']['book']]
-book = books[0]
-x = _xmlRepository.createById(
-    pathFolder=pathFolder, obj=book)
+# book = books[0]
+# x = _xmlRepository.createById(
+#     pathFolder=pathFolder, obj=book)
 
+_xmlRepository.createAll(pathFolder, books)
 # for book in books:
 # print(f"Title: {book.title}, Author: {book.author}")
