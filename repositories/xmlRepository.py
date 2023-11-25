@@ -10,6 +10,13 @@ class BaseModel:
 
 
 class xmlRepository:
+    _instance = None
+
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super(xmlRepository, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self, root="root") -> None:
         self.root = root
 
@@ -62,7 +69,7 @@ class xmlRepository:
 
         Parameters:
         - pathFolder (string): path of the folder xml.
-        - obj (string): object to write.
+        - obj (object): object to write.
 
         Returns: TBD.
         """
@@ -94,7 +101,7 @@ class xmlRepository:
 
         Parameters:
         - pathFile (string): path of the file xml.
-        - obj (string): object to write.
+        - obj (object): object to write.
 
         Returns: TBD.
         """
@@ -121,7 +128,7 @@ class xmlRepository:
 
         Parameters:
         - pathFolder (string): path of the folder xml.
-        - objs (string): list object to write.
+        - objs (list object): list object to write.
 
         Returns: TBD.
         """
@@ -142,7 +149,7 @@ class xmlRepository:
 
         Parameters:
         - pathFolder (string): path of the folder xml.
-        - obj (string): object to write.
+        - obj (object): object to write.
 
         Returns: TBD.
         """
@@ -164,7 +171,7 @@ class xmlRepository:
 
         Parameters:
         - pathFile (string): path of the file xml.
-        - obj (string): object to write.
+        - obj (object): object to write.
 
         Returns: TBD.
         """
