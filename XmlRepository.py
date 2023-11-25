@@ -10,7 +10,7 @@ class BaseModel:
         self.id = id
 
 
-class XmlRepository:
+class xmlRepository:
     def __init__(self, root="root") -> None:
         self.root = root
 

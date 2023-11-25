@@ -1,8 +1,8 @@
-import XmlRepository as Xml
+import xmlRepository as xml
 import json
 
 
-class Book(Xml.BaseModel):
+class Book(xml.BaseModel):
     def __init__(self, id, author, title, genre, price, description):
         super().__init__(id)
 
@@ -19,7 +19,7 @@ class Book(Xml.BaseModel):
 pathFolder = f"O:\\TestData"
 pathFile = f"O:\\TestData\\book.xml"
 
-_xmlRepository = Xml.XmlRepository()
+_xmlRepository = xml.xmlRepository()
 result = _xmlRepository.read(pathFile)
 # print(result)
 
