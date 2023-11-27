@@ -233,24 +233,22 @@ xml_data = """<root>
       <price>44.95</price>
       <publish_date>2000-10-01</publish_date>
       <descriptions>
-         <description>
             <citys>
                <city>asdasdasd</city>
                <city>asdqweqwe</city>
             </citys>
             <zipcode>10001</zipcode>
-         </description>
-         <description>
+         </descriptions>
+         <descriptions>
             <citys>
                <city>123123152asdasd</city>
                <city>2qrqwrajkhf</city>
             </citys>
             <zipcode>90001</zipcode>
-         </description>
-      </descriptions>
+         </descriptions>
    </book>
 </root>"""
-
+x = xmltodict.parse(xml_data)['root']
 data_object = [DynamicObject(element) for element in (ET.fromstring(xml_data))]
 
 # Accessing attributes
