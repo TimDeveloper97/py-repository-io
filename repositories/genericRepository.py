@@ -1,11 +1,10 @@
 import os
-import json
-import xmlRepository as xml
+import XmlRepository as xml
 import uuid
 import shutil
 
 
-class genericRepository:
+class GenericRepository:
 
     def __init__(self, root, commany, table=None) -> None:
         self.root = root
@@ -72,7 +71,7 @@ class genericRepository:
             print("Error: ", ex)
         return None
 
-    def exist(self, pathFolder, id=None):
+    def exist(self, path_folder, id=None):
         """
         Checked exist file with id in folderId.
 
@@ -83,11 +82,11 @@ class genericRepository:
         Returns: TBD.
         """
         try:
-            if not os.path.exists(pathFolder):
+            if not os.path.exists(path_folder):
                 return False
 
             if id != None:
-                pathFile = pathFolder + f"{id}.xml"
+                pathFile = path_folder + f"{id}.xml"
                 return os.path.exists(pathFile)
         except Exception as ex:
             print("Error: ", ex)
@@ -129,7 +128,7 @@ class genericRepository:
             print("Error: ", ex)
         return None
 
-    def deleteAll(self, folderId):
+    def delete_all(self):
         """
         Delete folderId.
 

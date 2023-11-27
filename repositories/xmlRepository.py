@@ -9,18 +9,18 @@ class BaseModel:
         self.id = id
 
 
-class xmlRepository:
+class XmlRepository:
     _instance = None
 
     def __new__(cls):
         if not cls._instance:
-            cls._instance = super(xmlRepository, cls).__new__(cls)
+            cls._instance = super(XmlRepository, cls).__new__(cls)
         return cls._instance
 
     def __init__(self, root="root") -> None:
         self.root = root
 
-    def read(self, pathFile):
+    def read(self, path_file):
         """
         Read json file.
 
@@ -30,8 +30,8 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if pathFile and os.path.exists(pathFile):
-                with open(pathFile, 'r') as file:
+            if path_file and os.path.exists(path_file):
+                with open(path_file, 'r') as file:
                     content = file.read()
                     js = json.dumps(xmltodict.parse(content), indent=2)
                     return js
@@ -39,7 +39,7 @@ class xmlRepository:
             print("Error: ", ex)
         return None
 
-    def readAll(self, pathFolder):
+    def readAll(self, path_folder):
         """
         Read json file.
 
@@ -51,19 +51,19 @@ class xmlRepository:
         try:
             files = []
             objs = []
-            if os.path.exists(pathFolder) and os.path.isdir(pathFolder):
+            if os.path.exists(path_folder) and os.path.isdir(path_folder):
                 xmlfiles = [f for f in os.listdir(
-                    pathFolder) if f.endswith('.xml')]
+                    path_folder) if f.endswith('.xml')]
 
                 for xmlfile in xmlfiles:
-                    objs.append(self.read(pathFolder + "\\" + xmlfile))
+                    objs.append(self.read(path_folder + "\\" + xmlfile))
 
                 return objs
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def createById(self, pathFolder, obj):
+    def createById(self, path_folder, obj):
         """
         Create file with object.
 
@@ -74,10 +74,10 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if not os.path.exists(pathFolder):
-                os.makedirs(pathFolder)
+            if not os.path.exists(path_folder):
+                os.makedirs(path_folder)
 
-            pathfile = pathFolder + f"\\{obj.id}.xml"
+            pathfile = path_folder + f"\\{obj.id}.xml"
 
             if os.path.exists(pathfile):
                 os.remove(pathfile)
@@ -95,7 +95,7 @@ class xmlRepository:
             print("Error: ", ex)
         return None
 
-    def createByName(self, pathFile, obj):
+    def createByName(self, path_file, obj):
         """
         Ccreate all file with object.
 
@@ -106,8 +106,8 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if os.path.exists(pathFile):
-                os.remove(pathFile)
+            if os.path.exists(path_file):
+                os.remove(path_file)
 
             # Convert JSON string to Python dictionary
             json_data = json.dumps(obj.__dict__)
@@ -116,13 +116,13 @@ class xmlRepository:
             xml_string = dicttoxml.dicttoxml(
                 json_data, custom_root=self.root).decode("utf-8")
 
-            with open(pathFile, 'w') as file:
+            with open(path_file, 'w') as file:
                 file.write(xml_string)
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def createAll(self, pathFolder, objs):
+    def createAll(self, path_folder, objs):
         """
         Ccreate all file with object.
 
@@ -133,17 +133,17 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if not os.path.exists(pathFolder):
-                os.makedirs(pathFolder)
+            if not os.path.exists(path_folder):
+                os.makedirs(path_folder)
 
             if objs:
                 for obj in objs:
-                    self.createById(pathFolder, obj)
+                    self.createById(path_folder, obj)
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def updateById(self, pathFolder, obj):
+    def updateById(self, path_folder, obj):
         """
         Ccreate all file with object.
 
@@ -154,10 +154,10 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if not os.path.exists(pathFolder):
-                os.makedirs(pathFolder)
+            if not os.path.exists(path_folder):
+                os.makedirs(path_folder)
 
-            pathFile = pathFolder + f"\\{obj.id}.xml"
+            pathFile = path_folder + f"\\{obj.id}.xml"
             if os.path.exists(pathFile):
                 os.remove(pathFile)
             self.createByName(pathFile, obj)
@@ -165,7 +165,7 @@ class xmlRepository:
             print("Error: ", ex)
         return None
 
-    def updateByName(self, pathFile, obj):
+    def updateByName(self, path_file, obj):
         """
         Create json file with specification name in path.
 
@@ -176,14 +176,14 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if os.path.exists(pathFile):
-                os.remove(pathFile)
-            self.createByName(pathFile, obj)
+            if os.path.exists(path_file):
+                os.remove(path_file)
+            self.createByName(path_file, obj)
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def delete(self, pathFolder, id):
+    def delete(self, path_folder, id):
         """
         Create json file with specification name in path.
 
@@ -194,10 +194,10 @@ class xmlRepository:
         Returns: TBD.
         """
         try:
-            if not os.path.exists(pathFolder):
-                os.makedirs(pathFolder)
+            if not os.path.exists(path_folder):
+                os.makedirs(path_folder)
 
-            pathFile = pathFolder + f"\\{id}.xml"
+            pathFile = path_folder + f"\\{id}.xml"
             if os.path.exists(pathFile):
                 os.remove(pathFile)
 
