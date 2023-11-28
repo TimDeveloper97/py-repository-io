@@ -1,20 +1,20 @@
 import os
-import re as xml
 import uuid
 import shutil
-
+from XmlRepository import XmlRepository
 
 class GenericRepository:
-
+    """Interface of Xml Repository"""
     def __init__(self, root, commany, table=None) -> None:
         self.root = root
         self.commany = commany
         self.table = table
-        self._xml = xml.xmlRepository()
+        self._xml = XmlRepository()
 
     @property
-    def pathFolder(self):
-        if self.table != None:
+    def path_folder(self):
+        """Interface of Xml Repository"""
+        if self.table is not None:
             return self.root + f"\\{self.commany}\\{self.table}\\"
         else:
             return self.root + f"\\{self.commany}\\"
@@ -29,16 +29,16 @@ class GenericRepository:
         Returns: TBD.
         """
         try:
-            if self.pathFolder and os.path.exists(self.pathFolder):
+            if self.path_folder and os.path.exists(self.path_folder):
                 if not obj.id:
                     obj.id = str(uuid.uuid4())
 
-                self._xml.createById(self.pathFolder, obj)
+                self._xml.create_by_id(self.path_folder, obj)
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def get(self, id):
+    def get(self, _id):
         """
         Get file with id in folderId.
 
@@ -48,30 +48,30 @@ class GenericRepository:
         Returns: TBD.
         """
         try:
-            if self.exist(self.pathFolder, id):
-                pathFile = self.pathFolder + f"{id}.xml"
+            if self.exist(self.path_folder, _id):
+                path_file = self.path_folder + f"{_id}.xml"
 
-                xmlFile = self._xml.read(pathFile)
-                return xmlFile
+                xml_file = self._xml.read(path_file)
+                return xml_file
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def getAll(self):
+    def get_all(self):
         """
         Get all file in folderId.
 
         Returns: TBD.
         """
         try:
-            if self.exist(self.pathFolder):
-                xmlFiles = self._xml.readAll(self.pathFolder)
-                return xmlFiles
+            if self.exist(self.path_folder):
+                xml_files = self._xml.readAll(self.path_folder)
+                return xml_files
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def exist(self, path_folder, id=None):
+    def exist(self, path_folder, _id = None):
         """
         Checked exist file with id in folderId.
 
@@ -85,9 +85,9 @@ class GenericRepository:
             if not os.path.exists(path_folder):
                 return False
 
-            if id != None:
-                pathFile = path_folder + f"{id}.xml"
-                return os.path.exists(pathFile)
+            if not _id:
+                path_file = path_folder + f"{_id}.xml"
+                return os.path.exists(path_file)
         except Exception as ex:
             print("Error: ", ex)
         return True
@@ -103,14 +103,14 @@ class GenericRepository:
         Returns: TBD.
         """
         try:
-            if self.exist(self.pathFolder):
-                pathFile = self.pathFolder + f"{id}.xml"
-                self._xml.updateById(pathFile)
+            if self.exist(self.path_folder):
+                path_file = self.path_folder + f"{obj['_id']}.xml"
+                self._xml.updateById(path_file)
         except Exception as ex:
             print("Error: ", ex)
         return None
 
-    def delete(self, id):
+    def delete(self, _id):
         """
         Delete exist file with id in folderId.
 
@@ -121,9 +121,9 @@ class GenericRepository:
         Returns: TBD.
         """
         try:
-            if self.exist(self.pathFolder):
-                pathFile = self.pathFolder + f"{id}.xml"
-                self._xml.delete(pathFile)
+            if self.exist(self.path_folder):
+                path_file = self.path_folder + f"{_id}.xml"
+                self._xml.delete(path_file, _id)
         except Exception as ex:
             print("Error: ", ex)
         return None
@@ -138,8 +138,8 @@ class GenericRepository:
         Returns: TBD.
         """
         try:
-            if self.exist(self.pathFolder):
-                shutil.rmtree(self.pathFolder)
+            if self.exist(self.path_folder):
+                shutil.rmtree(self.path_folder)
         except Exception as ex:
             print("Error: ", ex)
         return None

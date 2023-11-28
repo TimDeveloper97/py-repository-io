@@ -1,10 +1,9 @@
 """abstractmethod lib"""
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class IXmlRepository:
+class IXmlRepository(ABC):
     """Interface of Xml Repository"""
-    
     @abstractmethod
     def read(self, path_file):
         """
@@ -15,7 +14,6 @@ class IXmlRepository:
 
         Returns: TBD.
         """
-
     @abstractmethod
     def read_all(self, path_folder):
         """
@@ -26,7 +24,6 @@ class IXmlRepository:
 
         Returns: TBD.
         """
-
     @abstractmethod
     def create_by_id(self, path_folder, obj):
         """
@@ -37,20 +34,18 @@ class IXmlRepository:
         - obj (object): object to write.
 
         Returns: TBD.
-        """
-            
+        """ 
     @abstractmethod
     def create_by_name(self, path_file, obj):
         """
-        Create all file with object.
+        Create by file with object.
 
         Parameters:
         - path_file (string): path of the file xml.
         - obj (object): object to write.
 
         Returns: TBD.
-        """
-        
+        """      
     @abstractmethod
     def create_all(self, path_folder, objs):
         """
@@ -62,11 +57,10 @@ class IXmlRepository:
 
         Returns: TBD.
         """
-
     @abstractmethod
     def update_by_id(self, path_folder, obj):
         """
-        Create all file with object.
+        Update file with obj.
 
         Parameters:
         - path_folder (string): path of the folder xml.
@@ -74,7 +68,6 @@ class IXmlRepository:
 
         Returns: TBD.
         """
-
     @abstractmethod
     def update_by_name(self, path_file, obj):
         """
@@ -86,7 +79,6 @@ class IXmlRepository:
 
         Returns: TBD.
         """
-
     @abstractmethod
     def delete(self, path_folder, _id):
         """
